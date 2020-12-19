@@ -18,15 +18,13 @@ fn is_string_numeric(str: String) -> bool {
 }
 
 /// Validates the given string for AMKA
-pub fn valid(amka: &str) -> bool {
+pub fn validate(amka: &str) -> (bool, &str) {
     if !is_string_numeric(amka.to_string()) {
-        println!("Provided AMKA is not a numeric value");
-        return false;
+        return (false, "Provided AMKA is not a numeric value");
     }
 
     if amka.chars().count() != 11 {
-        println!("Provided number is not 11 digits long");
-        return false;
+        return (false, "Provided number is not 11 digits long");
     }
 
     let check_date = || -> Result<(), ParseError> {
@@ -36,58 +34,69 @@ pub fn valid(amka: &str) -> bool {
     };
 
     if let Err(_err) = check_date() {
-        println!("First 6 digits of the provided AMKA do not represent a valid date");
-        return false;
+        return (
+            false,
+            "First 6 digits of the provided AMKA do not represent a valid date",
+        );
     }
 
     if !luhn::valid(amka) {
-        println!("Provided AMKA does not have a valid checkdigit");
-        return false;
+        return (false, "Provided AMKA does not have a valid checkdigit");
     }
 
-    true
+    (true, "")
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::valid;
+    use crate::validate;
 
     #[test]
     fn it_validates_valid_amka() {
-        assert_eq!(true, valid("09095986684"));
+        let (is_valid, _err) = validate("09095986684");
+        assert_eq!(true, is_valid);
     }
 
     #[test]
     fn it_fails_when_not_a_number() {
-        assert_eq!(false, valid("asvs"));
+        let (is_valid, _err) = validate("asvs");
+        assert_eq!(false, is_valid);
     }
 
     #[test]
     fn it_fails_when_short_number() {
-        assert_eq!(false, valid("09095986"));
+        let (is_valid, _err) = validate("09095986");
+        assert_eq!(false, is_valid);
     }
 
     #[test]
     fn it_fails_when_long_number() {
-        assert_eq!(false, valid("090959866845"));
+        let (is_valid, _err) = validate("090959866845");
+        assert_eq!(false, is_valid);
     }
 
     #[test]
     fn it_fails_when_not_a_valid_date() {
-        assert_eq!(false, valid("39095986681"));
+        let (is_valid, _err) = validate("39095986681");
+        assert_eq!(false, is_valid);
     }
 
     #[test]
     fn it_fails_with_bad_checkdigit() {
-        assert_eq!(false, valid("09095986680"));
+        let (is_valid, _err) = validate("09095986680");
+        assert_eq!(false, is_valid);
     }
 
     #[test]
     fn readme() {
         // An invalid AMKA
-        assert!(!valid("09095986680"));
+        let (is_valid, err) = validate("09095986680");
+        assert!(!is_valid);
+        println!("{}", err);
 
         // An valid AMKA
-        assert!(valid("09095986684"));
+        let (is_valid, err) = validate("09095986684");
+        assert!(is_valid);
+        assert_eq!("", err)
     }
 }
