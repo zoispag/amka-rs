@@ -1,6 +1,6 @@
 [package]
 name = "amka"
-version = "1.0.0"
+version = "1.0.1"
 description = "A validator for greek social security number (AMKA)"
 authors = ["Zois Pagoulatos <zpagoulatos@hotmail.com>"]
 license = "MIT"
