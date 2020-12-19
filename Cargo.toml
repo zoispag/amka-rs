@@ -1,0 +1,13 @@
+[package]
+name = "amka"
+version = "0.1.0"
+description = "A validator for greek social security number (AMKA)"
+authors = ["Zois Pagoulatos <zpagoulatos@hotmail.com>"]
+license = "MIT"
+edition = "2018"
+repository = "https://github.com/zoispag/amka-rs"
+readme = "README.md"
+
+[dependencies]
+chrono = "0.4"
+luhn = "1.0.1"
