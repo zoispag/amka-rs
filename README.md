@@ -1,7 +1,7 @@
 # amka-rs
 
 <a href="https://crates.io/crates/amka"><img src="https://img.shields.io/crates/v/amka.svg" /></a>
-![Rust](https://github.com/zoispag/amka-rs/workflows/Rust/badge.svg?event=push)
+![CI](https://github.com/zoispag/amka-rs/workflows/CI/badge.svg)
 
 A validator for greek social security number (AMKA)
 
