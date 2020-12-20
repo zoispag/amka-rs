@@ -17,15 +17,15 @@ amka = "1.0.0"
 Use the validator:
 
 ```rust
-use crate::validate;
+use amka;
 
 // An invalid AMKA
-let (is_valid, err) = validate("09095986680");
+let (is_valid, err) = amka::validate("09095986680");
 assert!(!is_valid);
 println!("{}", err);
 
 // An valid AMKA
-let (is_valid, err) = validate("09095986684");
+let (is_valid, err) = amka::validate("09095986684");
 assert!(is_valid);
 assert_eq!("", err)
 ```
