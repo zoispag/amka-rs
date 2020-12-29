@@ -11,7 +11,7 @@ Add `amka` under `[dependencies]` in your `Cargo.toml`:
 
 ```toml
 [dependencies]
-amka = "1.0.0"
+amka = "1.1.0"
 ```
 
 Use the validator:
